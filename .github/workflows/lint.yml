@@ -1,0 +1,22 @@
+name: ESLint
+
+on:
+  pull_request: 
+  push:
+    branches: 
+      - dev
+jobs: 
+  eslint: 
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      with:
+      - name: Install Modules
+        node-version: 16
+      - run: npm ci
+      - uses: goru00/npc-irc-dashboard@v1
+      - name: Run ESLint
+          run: eslint . --ext .js,.jsx,.ts,.tsx
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}

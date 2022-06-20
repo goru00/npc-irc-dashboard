@@ -14,7 +14,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: npm
       - name: Установка модулей серверной части
         run: cd server/ && npm ci
       - name: Проверка линта

@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Установка модулей серверной части
-        run: cd server/ && npm ci
+        run: cd server/ && npm install
       - name: Проверка линта
         run: npm run lint
   client:
@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Установка модулей клиентской части
-        run: cd client/ && npm ci
+        run: cd client/ && npm install
       - name: Сборка
         run: npm run build
       - name: Проверка линта

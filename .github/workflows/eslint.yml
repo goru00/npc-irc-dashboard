@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Установка модулей клиентской части
-        run: cd server/ && npm ci
+        run: cd client/ && npm ci
       - name: Сборка
         run: npm run build
       - name: Проверка линта

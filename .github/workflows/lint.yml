@@ -1,23 +1,24 @@
-name: ESLint
+name: "Linting"
 on: 
   push: 
-    branches: [ master ]
-  pull_request:
-    branches: [ dev, master ]
-env: 
-  NODE_VERSION: 16
-jobs: 
-  linting:
-    name: Linting 
-    runs-on: ubuntu-latest 
+    branches: [ master, dev ]
+  pull_request: 
+    branches: [ dev]
+jobs:
+  init: 
+    runs-on: ubuntu-latest
+    strategy:
+      client-server: 
+        node-version: [ 17.x ]
     steps: 
-      - name: Install NodeJS
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - name: Запуск Node.js ${{ client-server.node-version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
-      - name: Code Checkout
-        uses: actions/checkout@v2
-      - name: Install Dependencies
-        run: npm ci
-      - name: Code Linting
-        run: npm run lint
+          node-version: ${{ client-server.node-version }}
+      - name: Установка зависимостей
+        run: npm install
+      - name: Сборка проекта
+        run: npm run build
+      - name: Линт
+        run: npm run lint 

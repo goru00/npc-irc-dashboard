@@ -5,6 +5,7 @@
         "lint": "npm run lint:client:jsx && npm run lint:server:js"
     },
     "devDependencies": {
-        "eslint": "8.18.0"
+        "eslint": "8.18.0",
+        "eslint-plugin-react": "^7.30.0"
     }
 }

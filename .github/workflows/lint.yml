@@ -3,11 +3,12 @@
 name: ESLint 
  
 on: 
-  pull_request: 
-  push:
-  branches:
-    - dev
-    - master
+  push: 
+    branches:
+      [ master ]
+  pull_request:
+    branches:
+      [ dev, master ]
  
 env: 
   NODE_VERSION: 16

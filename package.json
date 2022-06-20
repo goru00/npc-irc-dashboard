@@ -1,0 +1,10 @@
+{
+    "scripts": {
+        "lint:server:js": "npx eslint server/*.js",
+        "lint:client:jsx": "npx eslint client/src/*.jsx",
+        "lint": "npm run lint:client:jsx && npm run lint:server:js"
+    },
+    "devDependencies": {
+        "eslint": "8.18.0"
+    }
+}

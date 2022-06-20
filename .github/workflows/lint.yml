@@ -8,14 +8,14 @@ jobs:
   init: 
     runs-on: ubuntu-latest
     strategy:
-      client-server: 
+      client: 
         node-version: [ 17.x ]
     steps: 
       - uses: actions/checkout@v3
-      - name: Запуск Node.js ${{ client-server.node-version }}
+      - name: Запуск Node.js ${{ client.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ client-server.node-version }}
+          node-version: ${{ client.node-version }}
       - name: Установка зависимостей
         run: npm install
       - name: Сборка проекта

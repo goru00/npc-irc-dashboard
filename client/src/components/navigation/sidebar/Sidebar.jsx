@@ -33,6 +33,7 @@ function Sidebar(props) {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        mt: 2,
       }}
     >
       <Box

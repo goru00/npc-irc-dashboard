@@ -1,19 +1,9 @@
 import {
-  Box, CardContent, Container, Grid, Card, Typography, Button, Divider, Stack,
+  Box, CardContent, Container, Grid, Card, Typography, Button, Divider, Stack, TextField,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Sheet from '../../components/sheet/Sheet';
-
-const listData = {
-  header: [
-    { field: 'col1', text: 'Субъект РФ' },
-  ],
-  body: [
-    { col1: 'Алтайский край' },
-    { col1: 'Краснодарский край' },
-    { col1: 'Приморский край' },
-  ],
-};
+import r1022Service from '../../services/r1022.service';
 
 const tableData = {
   header: [
@@ -65,11 +55,61 @@ const tableData = {
     },
   ],
   body: [
-    { col1: 'Алтайский край', col2: 'Что-то' },
+    { alb_max: 'Алтайский край', adr_fact: 'Что-то' },
   ],
 };
 
 function Planning() {
+  const [listData, setListData] = useState({
+    header: [
+      { field: 'col1', text: 'Субъект РФ' },
+    ],
+    body: [],
+  });
+  useEffect(() => {
+    r1022Service.get().then((res) => {
+      // eslint-disable-next-line prefer-const
+      let newList = { ...listData };
+      if (res.data) {
+        res.data.dataDtos.forEach((item) => {
+          newList.body.push({
+            col1: item.p01,
+          });
+        });
+        setListData(newList);
+      }
+    });
+  }, []);
+
+  const handleSearch = (e) => {
+    // eslint-disable-next-line prefer-const
+    let newList = { ...listData };
+    newList.body = [];
+    if (e.target.value) {
+      r1022Service.getByFiltered(e.target.value).then((res) => {
+        if (res.data) {
+          res.data.dataDtos.forEach((item) => {
+            newList.body.push({
+              col1: item.p01,
+            });
+          });
+          setListData(newList);
+        }
+      });
+    } else {
+      r1022Service.get().then((res) => {
+        if (res.data) {
+          res.data.dataDtos.forEach((item) => {
+            newList.body.push({
+              col1: item.p01,
+            });
+          });
+          setListData(newList);
+        }
+      });
+    }
+  };
+
   return (
     <div>
       <Box
@@ -132,18 +172,40 @@ function Planning() {
               item
               lg={4}
               sm={4}
-              xl={2}
+              xl={3}
               xs={12}
             >
               <Card>
-                <Sheet data={listData} selectable={false} />
+                <CardContent>
+                  <Stack
+                    direction="row"
+                    divider={<Divider orientation="vertical" flexItem />}
+                    justifyContent="flex-start"
+                  >
+                    <TextField
+                      id="outlined-required"
+                      label="Поиск субъекта"
+                      defaultValue=""
+                      onChange={(e) => handleSearch(e)}
+                      sx={{
+                        width: '100%',
+                      }}
+                    />
+                  </Stack>
+                </CardContent>
+                { listData.body.length && (
+                  <Sheet
+                    data={listData}
+                    selectable={false}
+                  />
+                )}
               </Card>
             </Grid>
             <Grid
               item
               lg={8}
               sm={8}
-              xl={10}
+              xl={9}
               xs={12}
             >
               <Card>
@@ -152,14 +214,17 @@ function Planning() {
                     direction="row"
                     divider={<Divider orientation="vertical" flexItem />}
                     spacing={1}
+                    sx={{
+                      mb: 4,
+                    }}
                   >
                     <Button variant="contained" sx={{ background: '#358BC9', border: 'solid 1px #287AB5' }}>Добавить</Button>
                     <Button variant="contained" sx={{ background: '#358BC9', border: 'solid 1px #287AB5' }}>Удалить</Button>
                     <Button variant="contained" sx={{ background: '#358BC9', border: 'solid 1px #287AB5' }}>Сохранить</Button>
                   </Stack>
+                  <Sheet data={tableData} />
                 </CardContent>
                 <Divider />
-                <Sheet data={tableData} />
               </Card>
             </Grid>
           </Grid>

@@ -12,7 +12,7 @@ function InfoCard(props) {
       <CardContent>
         <Grid
           container
-          spacing={3}
+          spacing={1}
           sx={{
             justifyContent: 'space-between',
           }}

@@ -3,9 +3,9 @@ import {
   Box,
   Card,
   CardContent,
+  CardHeader,
   Container,
   Grid,
-  Typography,
 } from '@mui/material';
 import FactoryIcon from '@mui/icons-material/Factory';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
@@ -187,9 +187,9 @@ function Home() {
             <Grid
               item
               key={item.subtitle1}
-              lg={3}
+              lg={6}
               sm={6}
-              xl={3}
+              xl={6}
               xs={12}
             >
               <InfoCard
@@ -209,9 +209,10 @@ function Home() {
             xs={12}
           >
             <Card>
-              <Typography>
-                fwerjkfioerk
-              </Typography>
+              <CardHeader
+                title="Планирование поставок"
+                subheader="Таблица планирования поставок"
+              />
               <CardContent>
                 <Sheet data={tableData} selectable={false} />
               </CardContent>

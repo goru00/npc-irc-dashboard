@@ -28,9 +28,13 @@ function Sheet(props) {
             width: '100%',
             height: '100%',
           }}
+          plugins={{
+            gridcellediting: true,
+          }}
           selectable={{
             checkbox: selectable,
           }}
+          shadow
         >
           {data.header.map((head) => (
             head.componentType === 'Column' ? (

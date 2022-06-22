@@ -1,0 +1,35 @@
+name: Линтинг клиент-серверного приложения
+on: 
+  push: 
+    branches: [ master ]
+  pull_request: 
+    branches: [ dev, master]
+jobs:
+  server: 
+    name: Сервер
+    runs-on: ubuntu-latest
+    steps:
+      - name: Установка Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Установка модулей серверной части
+        run: cd server/ && npm install
+      - name: Проверка линта
+        run: cd server/ && npm run lint
+  client:
+    name: Клиент
+    runs-on: ubuntu-latest
+    steps:
+      - name: Установка Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Установка модулей клиентской части
+        run: cd client/ && npm install
+      - name: Проверка линта
+        run: cd client/ && npm run lint
